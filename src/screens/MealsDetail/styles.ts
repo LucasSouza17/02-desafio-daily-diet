@@ -1,14 +1,21 @@
 import styled, { css } from "styled-components/native";
+import { ScrollViewProps } from "react-native";
 
 export const Container = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.COLORS.GRAY_7};
 `;
 
-export const InfoContainer = styled.ScrollView`
-  flex: 1;
+export const InfoContainer = styled.ScrollView.attrs(
+  ({}) =>
+    ({
+      contentContainerStyle: {
+        flex: 1,
+      },
+    } as ScrollViewProps)
+)`
   padding: 24px;
-  background-color: white;
+  background-color: ${({theme}) => theme.COLORS.GRAY_7};
 
   margin-top: -12px;
 

@@ -28,6 +28,8 @@ export const Container = styled(TouchableOpacity).attrs(
 
   justify-content: center;
   align-items: center;
+
+  padding: 0px 24px
 `;
 
 export const Title = styled.Text<Props>`

@@ -2,7 +2,7 @@ import * as S from "./styles";
 
 type Props = {
   type: S.CardTypeStyleProps;
-  info: string;
+  info: string | number;
   description: string;
 };
 
