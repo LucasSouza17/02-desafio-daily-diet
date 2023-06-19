@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 
 import { mealsGetAll } from "@storage/meal/mealsGetAll";
-import { MealsStatisticsProps } from "@utils/MealsStatistics";
+import { MealsStatisticsProps, mealsStatistics } from "@utils/MealsStatistics";
 
 import * as S from "./styles";
 
@@ -10,7 +10,7 @@ import { DetailHeader } from "@components/DetailHeader";
 import { CardStatistic } from "@components/CardStatistic";
 import { Loading } from "@components/Loading";
 
-export function MealsDetail() {
+export function MealsStatistics() {
   const [isLoading, setIsLoading] = useState(true);
   const [mealsStatistic, setMealsStatistic] = useState<MealsStatisticsProps>({
     bestSequenceOfMealInDiet: 0,
@@ -24,8 +24,8 @@ export function MealsDetail() {
     try {
       setIsLoading(true);
 
-      const { mealsStatistic } = await mealsGetAll();
-      setMealsStatistic(mealsStatistic);
+      const meals = await mealsGetAll();
+      setMealsStatistic(mealsStatistics(meals));
     } catch (error) {
       console.log(error);
       Alert.alert("Estatísticas", "Não foi possível carregar as estatísticas.");

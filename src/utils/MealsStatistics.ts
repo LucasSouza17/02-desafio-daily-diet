@@ -34,7 +34,7 @@ export function mealsStatistics(meals: MealStorageDTO[]): MealsStatisticsProps {
   const totalMealsNumber = meals.length;
   const mealsInDietNumber = meals.filter((meal) => meal.isInDiet).length;
   const mealsNotInDietNumber = meals.filter((meal) => !meal.isInDiet).length;
-  const mealsInDietPercentage = Number(((mealsInDietNumber / totalMealsNumber) * 100).toFixed(2));
+  const mealsInDietPercentage = Number(((mealsInDietNumber / totalMealsNumber) * 100).toFixed(2)) || 0;
   const bestSequenceOfMealInDiet = bestSequenceOfMealInDietFunc(meals);
 
   return {

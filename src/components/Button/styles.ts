@@ -14,7 +14,6 @@ export const Container = styled(TouchableOpacity).attrs(
       activeOpacity: 0.7,
     } as TouchableOpacityProps)
 )<Props>`
-  flex: 1;
   flex-direction: row;
   gap: 12px;
 
@@ -29,7 +28,7 @@ export const Container = styled(TouchableOpacity).attrs(
   justify-content: center;
   align-items: center;
 
-  padding: 0px 24px
+  padding: 0px 24px;
 `;
 
 export const Title = styled.Text<Props>`

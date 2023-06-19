@@ -38,7 +38,7 @@ export const Icon = styled(Feather).attrs<Props>(({ theme }) => ({
 export const Title = styled.Text`
   flex: 1;
   text-align: center;
-  margin-left: -16px;
+  margin-left: -24px;
 
   ${({ theme }) => css`
     font-size: ${theme.FONT_SIZE.LG}px;

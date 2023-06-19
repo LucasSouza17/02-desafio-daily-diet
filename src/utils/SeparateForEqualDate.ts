@@ -1,3 +1,4 @@
+import moment from "moment";
 import { MealStorageDTO } from "@storage/meal/MealStorageDTO";
 
 interface Result {
@@ -19,15 +20,33 @@ export function separateForEqualDate(itens: MealStorageDTO[]): Result[] {
 
   const resultado: Result[] = [];
   for (const data in itensSeparados) {
-    resultado.push({ date: data, meals: itensSeparados[data] });
+    const sortingItemSeparadoByHour = itensSeparados[data].sort((a, b) =>
+      moment(a.hour, "hh:mm").diff(moment(b.hour, "HH:mm"))
+    ).map(meal => {
+      const formatHour = moment(meal.hour, 'HH:mm').format('HH:mm')
+      return {
+        ...meal,
+        hour: formatHour
+      }
+    });
+
+    resultado.push({ date: data, meals: sortingItemSeparadoByHour });
   }
 
-  const formatDate = resultado.map(data => {
+  const sortingDate = resultado.sort((a, b) =>
+    moment(b.date, "DD/MM/YYYY").diff(moment(a.date, "DD/MM/YYYY"))
+  );
+
+  const formatDate = sortingDate.map((data) => {
+    const dateSplited = data.date.split("/");
+    const yearFormat = dateSplited[2][0] + dateSplited[2][3];
+    const dateFormat = `${dateSplited[0]}.${dateSplited[1]}.${yearFormat}`;
+
     return {
       ...data,
-      date: data.date.replaceAll("/", ".")
-    }
-  })
+      date: dateFormat,
+    };
+  });
 
   return formatDate;
 }

@@ -8,7 +8,7 @@ export const Container = styled.View`
 
 export const InfoContainer = styled.View`
   flex: 1;
-  justify-content: "space-between";
+  justify-content: space-between;
 
   padding: 24px;
   background-color: ${({ theme }) => theme.COLORS.GRAY_7};

@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react'
+import { useCallback, useState } from "react";
 import { Alert, FlatList } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
@@ -9,7 +9,9 @@ import { UserHeader } from "@components/UserHeader";
 import { Button } from "@components/Button";
 import { MealAverage } from "@components/MealAverage";
 import { MealItem } from "@components/MealItem";
-import { Loading } from '@components/Loading';
+import { Loading } from "@components/Loading";
+import { separateForEqualDate } from "@utils/SeparateForEqualDate";
+import { mealsStatistics } from "@utils/MealsStatistics";
 
 export function Meals() {
   const [meals, setMeals] = useState<MealsListAll[]>([]);
@@ -19,20 +21,27 @@ export function Meals() {
   const navigation = useNavigation();
 
   function handleGoToMealsDetail() {
-    navigation.navigate("meals_detail")
+    navigation.navigate("meals_statistics");
   }
 
   function handleGoToNewMeal() {
-    navigation.navigate("new_meal")
+    navigation.navigate("new_meal");
+  }
+
+  function handleGoToMealDetail(id: string) {
+    navigation.navigate("meal_detail", {
+      mealId: id,
+    });
   }
 
   async function fetchMeals() {
     try {
       setIsLoading(true);
 
-      const {mealsByDate, mealsStatistic} = await mealsGetAll();
-      setMeals(mealsByDate);
-      setPercentageInDiet(mealsStatistic.mealsInDietPercentage)
+      const meals = await mealsGetAll();
+
+      setMeals(separateForEqualDate(meals));
+      setPercentageInDiet(mealsStatistics(meals).mealsInDietPercentage);
     } catch (error) {
       console.log(error);
       Alert.alert("Refeições", "Não foi possível carregar as refeições.");
@@ -40,7 +49,7 @@ export function Meals() {
       setIsLoading(false);
     }
   }
-  
+
   useFocusEffect(
     useCallback(() => {
       fetchMeals();
@@ -55,7 +64,7 @@ export function Meals() {
 
       <S.Title>Refeições</S.Title>
       <Button title="Nova refeição" icon="plus" onPress={handleGoToNewMeal} />
-      
+
       {isLoading ? (
         <Loading />
       ) : (
@@ -68,7 +77,13 @@ export function Meals() {
             <S.SectionContainer>
               <S.SectionText>{item.date}</S.SectionText>
               {item.meals.map((item, index) => (
-                <MealItem key={item.id} hour={item.hour} meal={item.name} isInDiet={item.isInDiet} />
+                <MealItem
+                  key={item.id}
+                  hour={item.hour}
+                  meal={item.name}
+                  isInDiet={item.isInDiet}
+                  onPress={() => handleGoToMealDetail(item.id)}
+                />
               ))}
             </S.SectionContainer>
           )}

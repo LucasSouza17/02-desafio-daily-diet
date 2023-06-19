@@ -1,21 +1,22 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { MEAL_COLLECTION } from "@storage/storageConfig";
 import { MealStorageDTO } from "./MealStorageDTO";
-import { separateForEqualDate } from "@utils/SeparateForEqualDate";
-import { mealsStatistics } from "@utils/MealsStatistics";
+import { AppError } from "@utils/AppError";
 
-export type MealsListAll = {
-  date: string;
-  meals: MealStorageDTO[];
-}
-
-export async function mealsGetAll() {
+export async function mealGetById(id: string) {
   try {
     const storage = await AsyncStorage.getItem(MEAL_COLLECTION);
 
     const meals: MealStorageDTO[] = storage ? JSON.parse(storage) : [];
 
-    return meals;
+    const meal = meals.filter(meal => meal.id === id)[0];
+
+    if(!meal) {
+      throw new AppError('Não foi possível carregar esta refeição.')
+    }
+
+    return meal;
   } catch(error) {
     throw error;
   }

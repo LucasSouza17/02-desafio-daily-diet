@@ -81,7 +81,7 @@ export function NewMeal() {
           </InputLabel>
           <S.RowBox>
             <InputLabel label="Data">
-              <Input placeholder="17/01/23" onChangeText={setDate} />
+              <Input placeholder="17/01/2023" onChangeText={setDate} />
             </InputLabel>
             <InputLabel label="Hora">
               <Input placeholder="12:00" onChangeText={setHour} />
