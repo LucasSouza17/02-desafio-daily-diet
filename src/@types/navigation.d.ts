@@ -3,7 +3,10 @@ export declare global {
     interface RootParamList {
       meals: undefined;
       meals_statistics: undefined;
-      new_meal: undefined;
+      new_meal: {
+        editMode: boolean;
+        mealId: string;
+      } | undefined;
       meal_created: {
         isInDiet: boolean;
       }

@@ -25,7 +25,10 @@ export function Meals() {
   }
 
   function handleGoToNewMeal() {
-    navigation.navigate("new_meal");
+    navigation.navigate("new_meal", {
+      editMode: false,
+      mealId: ''
+    });
   }
 
   function handleGoToMealDetail(id: string) {
@@ -87,6 +90,12 @@ export function Meals() {
               ))}
             </S.SectionContainer>
           )}
+          ListEmptyComponent={
+            <S.EmptyContainer>
+              <S.EmptyTitle>Nenhuma refeição cadastrada</S.EmptyTitle>
+              <S.EmptyDescription>Cadastre refeições para ter o controle da sua dieta.</S.EmptyDescription>
+            </S.EmptyContainer>
+          }
         />
       )}
     </S.Container>

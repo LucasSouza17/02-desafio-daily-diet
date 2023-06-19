@@ -14,6 +14,7 @@ export const Container = styled(TouchableOpacity).attrs(
       activeOpacity: 0.7,
     } as TouchableOpacityProps)
 )<Props>`
+  flex-grow: 1;
   flex-direction: row;
   gap: 12px;
 
